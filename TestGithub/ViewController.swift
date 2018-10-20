@@ -22,5 +22,9 @@ class ViewController: UIViewController {
         print("A button pressed")
     }
     
+    @IBAction func commitButtonPressed(_ sender: Any) {
+        
+        print("Commit and remote push")
+    }
 }
 
