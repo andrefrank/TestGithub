@@ -23,8 +23,38 @@ class ViewController: UIViewController {
     }
     
     @IBAction func commitButtonPressed(_ sender: Any) {
+    
+        var messages=[Message]()
+        for i in 0...4{
+            let newMessage = Message(title: "Message \(i)", body: "with text body")
+            messages.append(newMessage)
+        }
         
-        print("Commit and remote push")
+        do{
+            try Storage.shared.save(object: messages, to: Storage.StorageDirectoryType.caches, as: "messages.json")
+        }catch let storageError as Storage.StorageError{
+            
+            print(storageError.errorDescription)
+            
+        }catch let error{
+            print(error.localizedDescription)
+        }
+        
+        sleep(3)
+        
+        do{
+            let loadMessages = try Storage.shared.load("messages.json", from: Storage.StorageDirectoryType.caches, as: [Message].self)
+            print(loadMessages)
+            
+        }catch let storageError as Storage.StorageError{
+            
+            print(storageError.errorDescription)
+            
+        }catch let error{
+            print(error.localizedDescription)
+        }
+        
     }
+    
 }
 
